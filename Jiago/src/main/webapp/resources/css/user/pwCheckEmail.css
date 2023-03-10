@@ -1,0 +1,90 @@
+	@charset "utf-8";
+	
+	.hidden {
+		display: none;
+	}
+	
+	body {
+		font-family: 'Dongle';
+		font-size: 30px;
+	}
+	
+	#mainForm {
+		width: 800px;
+		margin: 200px auto;
+		text-align: center;
+	}
+	
+	#mainForm>div {
+		width: 500px;
+		margin: 0 auto;
+	}
+	
+	input {
+		font-family: 'Dongle'
+	}
+	
+	input[type="submit"] {
+		margin-top: 30px;
+		background-color: white;
+		border: 2px solid black;
+		padding: 10px 20px;
+		font-size: 40px;
+		border-radius: 15px;
+		cursor: pointer;
+	}
+	
+	#checkNumber {
+		width: 500px;
+		margin: 0 auto;
+	}
+	
+	#checkNumber>form>p {
+		width: 300px;
+		margin: 200px auto;
+	}
+	
+	#checkNumber>form>p>input {
+		width: inherit;
+		font-size: 30px;
+		box-sizing: border-box;
+		border-radius: 15px;
+	}
+	
+	input[type="text"], input[type="password"] {
+		padding: 10px 20px;
+		border: 3px solid black;
+		border-radius: 15px;
+		box-sizing: border-box;
+	}
+	
+	input[type="text"]:focus, input[type="password"]:focus {
+		outline: 3px solid lightgreen;
+	}
+	
+	input[type="submit"] {
+		padding: 0;
+		width: 300px;
+		background-color: #1D594E;
+		color: white;
+		border: none;
+	}
+	
+	#newPassword {
+		width: 900px;
+		margin: 180px auto;
+	}
+	
+	#newPassword>form>div {
+		width: 600px;
+		margin: 0 auto;
+	}
+	
+	#newPassword>form>div>input {
+		width: 300px;
+		font-size: 35px;
+	}
+	
+	input::placeholder {
+		color: #ccc;
+	}

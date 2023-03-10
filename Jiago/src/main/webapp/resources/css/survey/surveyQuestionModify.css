@@ -1,0 +1,87 @@
+	@charset "utf-8";
+	
+	.questionList.container {
+		border: 1px solid black;
+		padding: 10px;
+		margin: 10px;
+		width: 500px;
+		height: 100px;
+		overflow-y: scroll;
+	}
+	
+	input[id="search"] {
+		width: 250px;
+		height: 23px;
+	}
+	
+	input[id="question_content"] {
+		width: 250px;
+		height: 23px;
+	}
+	
+	input[id="example_content"] {
+		width: 250px;
+		height: 23px;
+	}
+	
+	.question {
+		border: 1px solid black;
+		padding: 10px;
+		margin: 10px;
+		width: 500px;
+	}
+	
+	#survey_wrap {
+		width: 550px;
+		margin: auto;
+		justify-content: center;
+		padding: 10px;
+	}
+	
+	.img_back {
+		padding-bottom: 20px;
+	}
+	
+	.img_back>a {
+		font-size: 25px;
+		text-decoration-line: none;
+		color: black;
+	}
+	
+	.img_back>a>img {
+		padding-right: 5px;
+		width: 25px;
+	}
+	
+	#button {
+		background-color: #1D594E;
+		color: white;
+		border: 0px;
+		width: 150px;
+		margin-left: 10px;
+		padding: 10px 10px;
+	}
+	
+	#exbutton {
+		background-color: #1D594E;
+		color: white;
+		border: 0px;
+		margin: 0px 5px;
+		padding: 5px 5px;
+	}
+	
+	#drop, #drop1 {
+		background-color: #1D594E;
+		color: white;
+		border: 0px;
+		margin: 0px 5px;
+		padding: 5px 5px;
+	}
+	
+	#delete {
+		background-color: #1D594E;
+		color: white;
+		border: 0px;
+		margin: 5px 5px;
+		padding: 5px 5px;
+	}

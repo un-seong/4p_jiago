@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+   "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.repository.DonateDAO">
+
+<select id="selectDonateList" resultType="hashmap">
+   select sum(total_donate) as sum, count(user_idx) as count, floor(sum(total_donate)/12000) as tree from user_donate
+</select>
+
+<insert id="insertUserPoint" parameterType="hashmap">
+   insert into user_donate (user_idx, total_donate) values (#{user_idx}, #{total_donate})
+</insert>
+
+<insert id="minusUserPoint" parameterType="hashmap">
+   insert into point(user_idx, point) values (#{user_idx},-#{total_donate})
+</insert>
+
+<select id="selectDonateHistory" resultType="userDonate">
+	select TO_CHAR(donate_date, 'YYYY-MM') as month,
+    	count(total_idx) as member,
+    	sum(total_donate) as total
+	from user_donate
+	group by TO_CHAR(donate_date, 'YYYY-MM')
+	order by month desc
+</select>
+
+<select id="selectSurveyCountByDonate" resultType="company">
+	SELECT
+	    c.company_name,
+	    COUNT(*) AS count
+	FROM
+	    survey s
+	    JOIN survey_company c ON s.company_idx = c.company_idx
+	WHERE
+	    s.survey_delete = 'N'
+	GROUP BY
+	    c.company_name,
+	    SUBSTR(SUBSTR(s.survey_info, INSTR(s.survey_info, 'Q') + 1), 1, INSTR(SUBSTR(s.survey_info, INSTR(s.survey_info, 'Q') + 1), ':') - 1)
+	ORDER BY
+	    COUNT(*) DESC
+</select>
+
+</mapper>

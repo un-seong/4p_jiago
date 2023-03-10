@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.itbank.repository.BoardDAO">
+
+	<select id="selectAll" resultType="board" parameterType="hashmap">
+		
+		select 
+			* from q_board
+			 
+			order by qboard_idx desc
+			offset #{offset} rows			
+			fetch first #{perPage} rows only
+			
+	</select>
+	
+	<select id="search" resultType="board" parameterType="hashmap">
+		select * from q_board
+		    where qboard_title like '%${qboard_title}%'  
+		   order by qboard_idx desc   
+		   offset #{offset} rows
+		   fetch first #{perPage} rows only	
+	</select>
+
+	
+	<select id="selectBoardCount" resultType="int">
+		select count(*) from q_board
+	</select>
+	
+	<select id="selectSearchBoardCount" parameterType="string" resultType="int">
+		select count(*) from q_board
+   		 where qboard_title like '%${qboard_title}%'
+   		 order by qboard_idx desc   
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="board">
+		select 
+			* from q_board
+			where
+				qboard_idx = #{qboard_idx}
+				
+	</select>
+	
+	<insert id="insert" parameterType="board">
+		insert into q_board
+			(qboard_title, qboard_writer, qboard_content, qboard_privacy) 
+		values 
+			(#{qboard_title}, #{qboard_writer}, #{qboard_content}, #{qboard_privacy})
+	</insert>
+	
+	<update id="modify">
+		update q_board
+			set
+				qboard_title = #{qboard_title},
+				qboard_writer = #{qboard_writer},
+				qboard_content = #{qboard_content}
+			
+			where
+				qboard_idx = #{qboard_idx}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete q_board where qboard_idx = #{qboard_idx}
+	</delete>
+	
+	<delete id="replyDelete" parameterType="int">
+		delete reply where reply_idx = #{reply_idx}
+	</delete>
+	
+	
+	<update id="updateViewCount" parameterType="int">
+		update q_board
+			set
+				qboard_view = qboard_view + 1
+			where
+				qboard_idx = #{qboard_idx}
+	</update>
+	
+	<select id="selectReplyList" parameterType="int" resultType="reply">
+		select *
+    		from (
+        select * from reply
+            where qboard_idx = ${qboard_idx}
+    		)
+    	order by reply_idx
+	</select>
+	
+	<insert id="insertReply" parameterType="reply">
+		insert into reply 
+				(qboard_idx, user_idx, admin_id, reply_content)
+			values
+				(#{qboard_idx},#{user_idx}, #{admin_id}, #{reply_content})
+	</insert>
+	
+	<select id="selectDeleteReply" parameterType="int" resultType="int">
+      select count(*) from reply where qboard_idx = ${qboard_idx}
+   </select>
+   
+   <delete id="deleteReplyAll" parameterType="int">
+      delete from reply where qboard_idx = ${qboard_idx}
+   </delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

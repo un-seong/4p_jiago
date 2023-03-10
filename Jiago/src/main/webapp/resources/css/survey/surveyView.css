@@ -1,0 +1,111 @@
+	@charset "utf-8";
+	
+	.surveyView.item2.hidden {
+		display: none;		
+	}
+	
+	#survey_view_root {
+		width: 1200px;
+		margin: auto;
+		justify-content: center;
+		display: flex;
+		padding-top: 50px;
+	}
+	
+	#survey_view_main {
+		
+	}
+	
+	.surveyView {
+		width: 600px;
+		border-collapse: collapse;
+	}
+	
+	.surveyView  th, td {
+		border: 1px solid black;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	.surveyView tr th {
+		width: 30%;
+		background-color: #1B434A;
+		color: white;
+		background-color: #1B434A;
+	}
+	
+	.surveyList.surveyTitle.question {
+		background-color: #1B434A;
+		padding-left: 10px;
+		padding-top: 11px;
+		padding-bottom: 8px;
+		color: white;
+	}
+	
+	.surveyView.item2 {
+		margin-left: 15px;
+	}
+	
+	.surveyList.example {
+		padding-top: 5px;
+		border-bottom: 1px dashed #dadada;
+	}
+	
+	.surveyList.example:last-child {
+		margin-bottom: 20px;
+	}
+	
+	.view_button {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		padding-top: 20px;
+		float: right;
+	}
+	
+	.view_button button {
+		width: 70px;
+		height: 30px;
+		background-color: #1B434A;
+		border: 1px solid #1B434A;
+		color: white;
+		cursor: pointer;
+	}
+	
+	.view_mdButton {
+		display: flex;
+	}
+	
+	#surveyDelete {
+		margin-left: 10px;
+	}
+	
+	.surveyView.item2_list {
+		height: 550px;
+		overflow-y: scroll; 
+	}
+	
+	
+	.surveyView.item2_list {
+	   -ms-overflow-style: none; /* IE and Edge */
+	   scrollbar-width: none; /* Firefox */
+	}
+	
+	.surveyView.item2_list::-webkit-scrollbar {
+	   display: none; /* Chrome, Safari, Opera*/
+	}
+	
+	.img_back {
+		padding-bottom: 20px;
+	}
+	
+	.img_back>a {
+		font-size: 25px;
+		text-decoration-line: none;
+		color: black;
+	}
+	
+	.img_back>a>img {
+		padding-right: 5px;
+		width: 25px;
+	}

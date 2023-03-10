@@ -1,0 +1,164 @@
+	@charset "utf-8";
+	
+.profile_body {
+		background-color: #f9fbfc;
+		margin: 0 35px;
+	}	
+	#giagoid_wrap {
+		display: flex;
+	}
+	.header_subindex {
+		border-right: 1px solid #dadada;
+		border-left: 1px solid #dadada;
+		box-shadow: 5px 1px 8px 0 rgb(0 0 0 / 6%);
+		width: 500px;
+		background-color: white;
+		margin: 0px;
+	}
+
+	.myPageLogo > a > img {
+		width: 300px;
+	}
+	
+	.leftmenu {
+		width: 300px;
+		list-style: none;
+	}
+	
+	.leftmenu > li {
+		width: 390px;
+		padding: 25px 15px;
+	}
+	
+	.leftmenu > li:last-child {
+		padding-bottom: 40px;
+		margin-bottom: 40px;
+		border-bottom: 1px solid #dadada;
+	}
+	
+	.leftmenu > li > a {
+		text-decoration: none;
+		font-size: 30px;
+		color: black;
+		
+		
+	}
+	.leftmenu > li > a:hover {
+		border-bottom: 3px solid black;
+		font-weight: bolder;
+	}
+	
+	.headerLeft2 {
+		padding-bottom: 200px;
+	}
+	
+	.leftmenu2 { 
+		list-style: none;
+	}
+	
+	.leftmenu2 > li {
+		padding-bottom: 20px;	
+	
+	}
+	
+	.leftmenu2 > li > a {
+		text-decoration: none;
+		color: grey;
+		font-size: 20px;
+	}
+	
+	.leftmenu2 > li > a > img {
+		width: 30px;
+		padding-right: 10px;
+	}
+	.headerLeft3 {
+		margin: auto;
+		width: 450px;
+		height: 70px;
+		border: 1px solid rgba(100, 140, 133,.3);
+		background-color: rgba(100, 140, 133, .08);
+		border-radius: 20px;
+		
+	}
+	.leftmenu3 { 
+		list-style: none;
+		padding-left: 15px;
+	}
+	
+	.leftmenu3 > li {
+		
+		padding-bottom: 20px;
+	}
+	
+	.leftmenu3 > li > a {
+		text-decoration: none;
+		color: #648C85;
+		font-weight:bolder;
+		font-size: 20px;
+	}
+	.leftmenu3 > li > a > img {
+		width: 30px;
+		padding-right: 5px;
+		
+	}
+	.headerLeft4 {
+		display:flex;
+		margin-right:10px;
+		justify-content: center;
+		text-align: center;
+		padding-top: 50px;
+		padding-bottom: 20px;
+	}
+	.leftmenu4 { 
+		list-style: none;
+		padding-left: 20px;
+		display: flex;
+	}
+	
+	.leftmenu4 > li {
+		padding-right: 20px;
+	}
+	
+	.leftmenu4 > li > a {
+		text-decoration: none;
+	}
+	.li_JIAGO a{
+		font-size: 20px;
+		color: grey;
+		font-weight: bolder;
+	}
+	.li_personal {
+		padding-top: 4px;
+	}
+	.li_personal a{
+		font-size:14px;
+		color: grey;
+		font-weight: bold;
+	}
+	.li_use {
+		padding-top: 4px;
+	}
+	.li_use a{
+		font-size:14px;
+		color: grey;
+	}
+	
+	
+	.hidden {
+		display: none;
+	}
+	.gnb_area {
+		display: flex;
+		padding-top: 20px;
+	}
+	.gnb_area h1 {
+		margin: 5px;
+		
+	}
+	
+	.profile_logo img{
+		width: 150px;
+	}
+
+	
+	

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+   "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.repository.KakaoDao">
+
+<select id="realKakaoId" parameterType="String" resultType="int">
+	select count(user_kakao) from member where user_kakao=#{kakaoId}
+</select>
+
+
+
+
+
+
+</mapper>

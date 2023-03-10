@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+   "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.repository.NoticeDAO">
+
+   <!-- 공지사항 조회 -->
+   <select id="selectAll" resultType="notice" parameterType="hashmap">
+		
+		select 
+			* from notice
+			 
+			order by notice_idx desc  
+			offset #{offset} rows			
+			fetch first #{perPage} rows only
+			
+	</select>
+	
+	<select id="search" resultType="notice" parameterType="hashmap">
+		select * from notice
+		    where notice_name like '%${notice_name}%'  
+		   order by notice_idx desc   
+		   offset #{offset} rows
+		   fetch first #{perPage} rows only	
+	</select>
+   
+   <!-- 공지사항 카운트 -->
+   <select id="selectNoticeCount" resultType="int">
+      select count(*) from notice
+   </select>
+   
+   <select id="selectSearchNoticeCount" parameterType="string" resultType="int">
+		select count(*) from notice
+   		 where notice_name like '%${notice_name}%'
+   		 order by notice_idx desc  
+	</select>
+   
+   <!-- 게시판 조회(상세조회) -->
+   <select id="selectOne" parameterType="int" resultType="notice">
+      select 
+         * from notice
+         where
+            notice_idx = #{notice_idx}            
+   </select>
+   
+   <!-- 공지사항 글쓰기(작성) -->
+   <insert id="insert" parameterType="notice">
+      insert into notice
+         (notice_name, notice_admin, notice_content) 
+      values 
+         (#{notice_name}, #{notice_admin}, #{notice_content})
+   </insert>
+   
+   <!-- 공지사항 수정 -->
+   <update id="modify">
+      update notice
+         set
+            notice_name = #{notice_name},
+            notice_admin = #{notice_admin},
+            notice_content = #{notice_content}
+         
+         where
+            notice_idx = #{notice_idx}
+   </update>
+   
+   <!-- 공지사항 삭제 -->
+   <delete id="delete" parameterType="int">
+      delete notice where notice_idx = #{notice_idx}
+   </delete>
+   
+   
+
+</mapper>
+  

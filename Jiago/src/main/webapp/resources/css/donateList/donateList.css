@@ -1,0 +1,268 @@
+	@charset "utf-8";
+	
+	.main2 {
+		margin: 150px auto 0 auto;
+		display: flex;
+		justify-content: center;
+		width: 1700px;
+	}
+	
+	.donate {
+		background-color: #1B534A;
+		color: white;
+		width: 60%;
+		padding-bottom: 20px;
+	}
+	
+	.donate_title {
+		font-size: 50px;
+		margin-left: 20px;
+	}
+	
+	.donate_total {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	.give {
+		display: flex;
+		justify-content: space-around;
+	}
+	
+	.give>.right>div {
+		margin: 10px 0px;
+	}
+	
+	.donate_detail {
+		text-align: center;
+	}
+	
+	.currentPoint {
+/* 		background-color: white; */
+		color: black;
+	}
+	
+	button[type="submit"] {
+		background-color: #44A666;
+		color: white;
+		height: 50px;
+		width: 100px;
+		border: 0px;
+		padding-bottom: 3px;
+		font-size: 19px;
+		font-weight: bold;
+	}
+	
+	button[type="submit"]:active {
+		background-color: #29633D;
+		color: white;
+		height: 50px;
+		width: 100px;
+		border: 0px;
+	}
+	
+	.donate_detail {
+		color: white;
+		width: 50%;
+		margin: auto;
+	}
+	
+	button[type="button"] {
+		background-color: #44A666;
+		color: white;
+		height: 40px;
+		width: 250px;
+		border: 0px;
+		margin-bottom: 10px;
+		font-weight: bold;
+		font-size: 21px;
+	}
+	
+	button[type="button"]:active {
+		background-color: #29633D;
+		color: white;
+		height: 30px;
+		width: 250px;
+		border: 0px;
+	}
+	
+	.joinPerson {
+		text-align: right;
+		font-size: 50px;
+	}
+	
+	.add {
+		display: flex;
+		justify-content: center;
+		width: 1700px;
+		margin: 0 auto 50px auto;
+	}
+	
+	.add>img {
+		width: 1020px;
+	}
+	
+	.donate_bottom {
+		border: 1px solid black;
+	}
+	
+	.donate_bottom_title {
+		font-size: 50px;
+	}
+	
+	.donate_bottom_items {
+		display: flex;
+		width: 70%;
+	}
+	
+	.donate_bottom_items>div {
+		margin: 5px 10px;
+	}
+	
+	.donate_bottom_items>div>img {
+		width: 200px;
+		height: 100px;
+	}
+	
+	.modal {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	.modal__background {
+		background-color: rgba(0, 0, 0, 0.6);
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+	
+	.modal__content {
+		text-align: center;
+		position: relative;
+		background-color: white;
+		border-radius: 10px;
+		top: 0;
+		padding: 10px 25px;
+		width: 20%;
+	}
+	
+	.donate_subtitle {
+		font-size: 50px;
+	}
+	
+	.donate_value {
+		font-size: 100px;
+		margin-top: -40px;
+	}
+	
+	hr {
+		margin-top: -20px;
+	}
+	
+	.currentPoint_User {
+		background-color: white;
+		width: 400px;
+		padding-left: 10px;
+	}
+	
+	.donate_input {
+		width: 300px;
+		height: 46px;
+		margin-right: 10px;
+		font-size: 21px;
+		padding-left: 10px;
+	}
+	
+	.give>.left>img {
+		margin-left: 30px;
+	}
+	
+	.modal_content {
+		font-size: 30px;
+		width: 480px;
+		height: 470px;
+		background-color: white;
+		box-shadow: 10px 10px 10px black;
+	}
+	
+	.modal_content>h3 {
+		text-align: center;
+		margin: 0;
+		padding: 15px;
+		background-color: #648C85;
+		color: white;
+	}
+	
+	.donateList {
+		height: 385px;
+		overflow-y: scroll;
+	}
+	
+	.donateListTable {
+		text-align: center;
+		margin: 10px auto;
+	}
+	
+	.donateListTable {
+		border-collapse: collapse;
+	}
+	
+	.donateListTable>thead>tr>th {
+		border: 2px solid #dadada;
+		padding: 10px;
+		text-align: center;
+		background-color: #1b534A;
+		color: white;
+	}
+	
+	.donateListTable>th, td {
+		border: 2px solid #dadada;
+		padding: 10px;
+		text-align: center;
+	}
+	
+	.donate_topImg>img {
+		width: 100%;
+		margin: 0px auto;
+	}
+	
+	.modal.hidden {
+		display: none;
+	}
+	
+	.modal_background {
+		width: 100%;
+		height: 100vh;
+		position: absolute;
+		z-index: -1;
+		background-color: rgba(0, 0, 0, 0.6);
+	}
+	
+	.closeButton {
+		background-color: white;
+		padding: 20px;
+		box-shadow: 10px 10px 10px black;
+	}
+	
+	.closeButton>button {
+		display: flex;
+		width: 180px;
+		align-content: center;
+		justify-content: center;
+		background-color: #648C85;
+		border: 0;
+		color: white;
+		padding: 5px;
+		font-size: 21px;
+		font-weight: bold;
+	}
+	
+	.nonePoint_User {
+		color: white;
+	}

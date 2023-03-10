@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+   "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.repository.CompanyDAO">
+	
+	<!-- 전체 회사 리스트 출력 -->
+	<select id="selectAll" resultType="company" parameterType="hashmap">
+	
+		select * from survey_company 
+		where company_delete = 'N'
+		order by company_idx desc
+		offset ${offset } rows			
+		fetch first ${perPage} rows only
+	
+	</select>
+	
+	<!-- 검색한 회사 리스트 출력 -->
+	<select id="getSearchListAll" resultType="company" parameterType="hashmap">
+		select * from survey_company 
+		where company_name like '%${company_name}%' and company_delete = 'N'
+		order by company_idx desc
+		offset ${offset } rows			
+		fetch first ${perPage} rows only
+	
+	</select>
+	
+	<!-- 전체 회사 수 카운트 -->
+	<select id="selectCompanyCount" resultType="int">
+		select count(*) from survey_company where company_delete = 'N'
+	</select>
+	
+	<!-- 검색한 회사 수 카운트 -->
+	<select id="selectSearchCompanyCount" resultType="int" parameterType="string">
+		select count(*) from survey_company
+		where company_name like '%${company_name}%'
+	</select>
+	
+	<select id="selectOneDetail" parameterType="int" resultType="company">
+		select * from survey_company where company_idx = #{company_idx}
+	</select>
+	
+	<update id="modifyCompany" parameterType="company">
+		update survey_company set
+		company_id =  #{company_id}, company_name = #{company_name}, company_num = #{company_num},
+		company_registnum = #{company_registnum}, company_address = #{company_address}, company_email = #{company_email}
+		where company_idx = #{company_idx}
+	
+	</update>
+	
+	<!-- 회사 리스트 추가하기 -->
+	<insert id="insertCompany" parameterType="company">
+		insert into survey_company 
+		(company_id, company_name, company_num, company_registnum, company_address, company_email) 
+		values (#{company_id}, #{company_name}, #{company_num}, #{company_registnum}, #{company_address}, #{company_email})
+	
+	</insert>
+	<!-- 회사 삭제하기 -->
+	
+	<update id="deleteCompany" parameterType="int">
+		update survey_company set company_delete = 'Y' where company_idx = ${company_idx}
+	</update>
+	
+	
+</mapper>

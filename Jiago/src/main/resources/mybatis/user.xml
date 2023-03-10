@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itbank.repository.UserDAO">
+
+	<!-- 로그인시 아이디 비밀번호 확인 -->
+	<select id="login" parameterType="user" resultType="user">
+		select * from
+		member where user_id=#{user_id} and user_pw=#{user_pw} and
+		user_withdraw ='N'
+	</select>
+
+	<!-- 회원 가입 -->
+	<insert id="join" parameterType="user">
+		insert into member
+		(user_id, user_pw, user_name, user_birth, user_gender,
+		user_address, user_phone, user_email, user_job, user_type)
+		values (#{user_id}, #{user_pw}, #{user_name}, #{user_birth},#{user_gender},
+		#{user_address}, #{user_phone},
+		#{user_email}, #{user_job}, #{user_type})
+	</insert>
+
+	<select id="checkRealMail" parameterType="String"
+		resultType="int">
+		select count(user_email) from member where
+		user_email=#{email}
+	</select>
+
+
+	<select id="getId" parameterType="String" resultType="String">
+		select
+		user_id from member where user_email=#{email}
+	</select>
+
+	<select id="checkId" parameterType="String" resultType="HashMap">
+		select
+		user_id,user_email,user_phone from member where user_id=#{id}
+	</select>
+
+	<update id="update" parameterType="user">
+		update member
+		set user_address=#{user_address},
+		user_phone=#{user_phone},
+		user_email=#{user_email},
+		user_job=#{user_job}
+		where user_idx = #{user_idx}
+	</update>
+
+	<update id="newPasswordSet" parameterType="user">
+		update member set
+		user_pw=#{user_pw} where user_id=#{user_id}
+	</update>
+
+	<update id="pwUpdate" parameterType="user">
+		update member set
+		user_pw=#{user_pw} where user_idx=#{user_idx}
+	</update>
+
+	<!-- 현재 보유 포인트 가져오기 -->
+	<select id="getPoint" parameterType="int" resultType="String">
+		select
+		sum(point) from point where user_idx=#{user_idx}
+	</select>
+
+	<!-- 총 기부 포인트 가져오기 -->
+	<select id="getTotalPoint" parameterType="int"
+		resultType="String">
+		select sum(total_donate) from user_donate where
+		user_idx=#{user_idx}
+	</select>
+
+	<!-- 등급 지정 -->
+	<update id="setGrade" parameterType="user">
+		update member set
+		user_grade=#{user_grade } where user_idx=#{user_idx }
+	</update>
+
+	<!-- 등급 가져오기 -->
+	<select id="getGrade" parameterType="int" resultType="String">
+		select
+		user_grade from member where user_idx=#{user_idx }
+	</select>
+
+	<select id="getPw" parameterType="String" resultType="String">
+		select
+		user_pw from member where user_idx=#{idx}
+	</select>
+
+	<!-- 삭제지만 withdraw를 Y로 업데이트 한다 -->
+	<update id="quit" parameterType="int">
+		update member set user_withdraw
+		= 'Y' where user_idx =#{idx }
+	</update>
+
+	<select id="selectUser" resultType="user" parameterType="int">
+		select * from member where user_idx = #{user_idx}
+	</select>
+
+
+	<!-- 회원 가입시 아이디 중복 검사 -->
+	<select id="joinId" parameterType="String" resultType="int">
+		select
+		count(user_id) from member where user_id=#{id}
+	</select>
+
+	<!-- 회원 가입시 유저명 중복 검사 -->
+	<select id="joinName" parameterType="String" resultType="int">
+		select
+		count(user_name) from member where user_name=#{name}
+	</select>
+
+	<!-- 회원 가입 이메일 인증시 이메일 중복 검사 -->
+	<select id="getEmail" parameterType="String" resultType="int">
+		select
+		count(user_email) from member where user_email=#{email}
+	</select>
+
+	<select id="checkPhoneNum" parameterType="String"
+		resultType="int">
+		select count(user_phone) from member where
+		user_phone=#{phone}
+	</select>
+
+</mapper>

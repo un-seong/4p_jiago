@@ -1,0 +1,87 @@
+	@charset "utf-8";
+		
+	
+	#SurveyPreferGender {
+		width: 500px;
+		display: flex;
+	}
+	
+	.surveyPreferGender {
+		margin-top: 30px;
+		padding: 10px;
+	}
+	
+	.surveyPreferGenderHeader {
+		margin-bottom: 50px;
+	}
+	
+	#surveyPreferJob {
+		width: 500px;
+		display: flex;
+		margin-top: 120px;
+	}
+	
+	#surveyPreferQuestion {
+		width: 500px;
+		display: flex;
+	}
+	
+	#surveyPreferAge {
+		width: 500px;
+		display: flex;
+		margin-top: 120px;
+	}
+	
+	.img_back>a {
+		display: block;
+		width: 135px;
+	}
+	
+	.topSurveyPreferQuestionTable {
+		height: 500px;
+		overflow-y: scroll; 
+	}
+	
+	.topSurveyPreferQuestion.surveyList > thead > tr > th:first-child,
+	.topSurveyPreferQuestion.surveyList2 > tbody > tr > td:first-child {
+	
+		width: 200px;
+	}
+	
+	.topSurveyPreferQuestion.surveyList > thead > tr > th:nth-child(2),
+	.topSurveyPreferQuestion.surveyList2 > tbody > tr > td:nth-child(2) {
+	
+		width: 500px;
+	}
+	
+	.topSurveyPreferQuestion.surveyList > thead > tr > th:nth-child(3),
+	.topSurveyPreferQuestion.surveyList2 > tbody > tr > td:nth-child(3) {
+	
+		width: 150px;
+	}
+	
+	
+	.topSurveyPreferQuestionTable.low {
+		border-collapse: collapse;
+		width: 800px;	
+	}
+	
+	.topSurveyPreferQuestion.surveyList2 {
+		border: 1px solid #dadada;
+		border-collapse: collapse;
+		width: 800px;
+		overflow-y: scroll;
+	}
+	
+	.topSurveyPreferQuestionTable.low > tbody > tr > td:first-child {
+	 width: 200px;
+	}
+	
+	.topSurveyPreferQuestionTable.low > tbody > tr > td:nth-child(2) {
+	 width: 500px;
+	}
+	
+	.topSurveyPreferQuestionTable.low  > tbody > tr > td:nth-child(3) {
+	 width: 150px;
+	}
+	

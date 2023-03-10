@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+   "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itbank.repository.SurveyDAO">
+
+
+	<select id="selectList" resultType="survey">
+	<![CDATA[
+		select * from survey
+		where to_date(substr(survey_date,10)) >= sysdate - 1 
+			and to_date(substr(survey_date, 1, 8)) <= sysdate 
+			and survey_delete ='N'
+		order by survey_idx desc
+		offset #{offset} rows
+		fetch first #{perPage}
+		rows only
+	]]>
+	</select>
+
+	<select id="selectAllList" resultType="survey">
+		select * from survey where survey_delete = 'N'
+		order by survey_idx desc
+		offset #{offset} rows
+		fetch first #{perPage} rows only
+
+	</select>
+
+	<select id="selectOneDetail" parameterType="int"
+		resultType="survey">
+		select * from survey where survey_idx = #{survey_idx}
+	</select>
+
+	<select id="selectSurveyQuestion" parameterType="int"
+		resultType="surveyQuestion">
+		select * from survey_question where question_idx > 1 and survey_idx = #{survey_idx} 
+		order by survey_question_idx, question_idx
+	</select>
+
+	<select id="selectSurveyExample" parameterType="int"
+		resultType="surveyExample">
+		select * from survey_example where question_idx > 1 
+		and survey_idx = #{survey_idx} order by question_idx, example_idx
+	</select>
+
+	<insert id="insertAnswer" parameterType="HashMap">
+		insert into answer(question_idx, survey_idx, user_idx, answer_content)
+		values (1, #{survey_idx}, #{user_idx}, #{answer_content})
+	</insert>
+
+	<select id="selectQuestionIdx" parameterType="HashMap"
+		resultType="int">
+		select question_idx from survey_question where survey_idx = #{survey_idx}
+		and question_idx > 1 order by question_idx
+	</select>
+
+	<update id="insertAnswerSubstr" parameterType="HashMap">
+		<foreach collection="questionIdx" item="item" index="index"
+			open="insert all" close="select * from dual" separator=" ">
+			into answer (answer_idx, user_idx, answer_content, question_idx,
+			survey_idx)
+			values
+			(get_seq('answer_seq'),
+			#{user_idx},
+			(select REGEXP_SUBSTR(answer_content, '[^,]+', 1, ${index + 1}) from answer
+			where question_idx = 1 and user_idx = #{user_idx}),
+			#{item},
+			#{survey_idx})
+		</foreach>
+	</update>
+
+	<delete id="deleteAnswerResult" parameterType="HashMap">
+		delete answer where survey_idx = #{survey_idx} and question_idx = 1 and
+		user_idx = #{user_idx}
+	</delete>
+
+	<insert id="insertUserPoint" parameterType="HashMap">
+		insert into point(user_idx, survey_idx, point) values (#{user_idx},
+		#{survey_idx}, (select survey_point from survey where survey_idx =
+		#{survey_idx}))
+	</insert>
+
+	<insert id="insertUserDonate" parameterType="userDonate">
+		insert into
+		user_donate (user_idx, survey_idx, total_donate) values (#{user_idx},
+		#{survey_idx}, #{total_donate})
+	</insert>
+
+	<insert id="minusUserPoint" parameterType="userDonate">
+		insert into
+		point(user_idx, survey_idx, point) values (#{user_idx}, #{survey_idx},
+		-#{total_donate})
+	</insert>
+
+	<select id="selectUserPoint" parameterType="int"
+		resultType="int">
+		select sum(point) from point where user_idx = #{user_idx}
+	</select>
+
+	<select id="selectHomeSurvey" resultType="survey">
+		<![CDATA[
+		select * from survey
+		where to_date(substr(survey_date,10)) >= sysdate - 1 
+			and to_date(substr(survey_date, 1, 8)) <= sysdate  and rownum
+		BETWEEN 1 AND 8 order by to_date(substr(survey_date,10))
+		]]>
+	</select>
+
+	<insert id="insertSurvey" parameterType="survey">
+		insert into survey
+		(company_idx, survey_title, survey_date, survey_point, survey_time,
+		survey_targetAge, survey_targetGender, survey_targetJob, survey_info)
+		values
+		(#{company_idx}, #{survey_title}, #{survey_date}, #{survey_point}, #{survey_time},
+		#{survey_targetAge},
+		#{survey_targetGender}, #{survey_targetJob}, #{survey_info})
+	</insert>
+
+	<select id="selectQuestionList" resultType="surveyQuestion"
+		parameterType="int">
+		select * from question where question_idx > 1 order by question_idx
+	</select>
+
+	<select id="selectSurveyIdx" resultType="int">
+		select * from(select survey_idx from survey order by rownum desc) where
+		rownum = 1
+	</select>
+
+	<insert id="insertQuestion" parameterType="HashMap">
+		insert into
+		survey_question
+		(survey_idx, question_idx, question_content)
+		values (#{survey_idx}, #{question_idx}, #{question_content})
+	</insert>
+
+	<insert id="insertExample" parameterType="HashMap">
+		insert into
+		survey_example
+		(survey_idx, question_idx, example_content)
+		values (#{survey_idx}, #{question_idx}, #{example_content})
+	</insert>
+
+	<insert id="insertNewQuestion" parameterType="HashMap">
+		insert into
+		survey_question (survey_idx, question_idx, question_content) values
+		(#{survey_idx}, question_seq.nextval, #{question_content})
+	</insert>
+
+	<insert id="insertNewExample" parameterType="HashMap">
+		insert into
+		survey_example
+		(survey_idx, question_idx, example_content)
+		values
+		(#{survey_idx},
+		(select question_idx from
+		(select * from survey_question where survey_idx = #{survey_idx} order by
+		question_idx desc) where rownum = 1),
+		#{example_content})
+	</insert>
+
+	<update id="updateSurvey" parameterType="survey">
+		update survey set
+		company_idx = #{company_idx}, survey_title = #{survey_title},
+		survey_date = #{survey_date},
+		survey_point = #{survey_point}, survey_time = #{survey_time}, survey_targetAge =
+		#{survey_targetAge},
+		survey_targetGender = #{survey_targetGender}, survey_targetJob = #{survey_targetJob},
+		survey_info = #{survey_info}
+
+		where survey_idx = #{survey_idx}
+	</update>
+
+	<delete id="changeSurveyQuestion" parameterType="int">
+		delete from
+		survey_question where survey_idx = #{survey_idx}
+	</delete>
+
+	<delete id="changeSurveyExample" parameterType="int">
+		delete from
+		survey_example where survey_idx = #{survey_idx}
+	</delete>
+
+	<select id="checkQuestion" parameterType="int"
+		resultType="surveyQuestion">
+		select * from question where question_idx = #{question_idx}
+	</select>
+
+	<update id="deleteSurvey" parameterType="int">
+		update survey set
+		survey_delete = 'Y' where survey_idx = ${survey_idx}
+	</update>
+
+	<select id="selectSurveyCount" resultType="int">
+		select count(*) from
+		survey
+	</select>
+
+	<select id="selectSurveyListCount" resultType="int">
+		<![CDATA[
+		select count(*)
+		from survey
+			where to_date(substr(survey_date,10)) >= sysdate - 1 
+			and to_date(substr(survey_date, 1, 8)) <= sysdate 
+			and survey_delete ='N'
+		]]>		
+	</select>
+
+	<select id="filterList" resultType="survey"
+		parameterType="hashmap">
+		<![CDATA[
+		select * from survey
+			where to_date(substr(survey_date,10)) >= sysdate - 1 
+			and to_date(substr(survey_date, 1, 8)) <= sysdate 
+			and survey_delete ='N'
+		]]>
+		
+		<if test="survey_targetAge != null">
+			and survey_targetAge like '%${survey_targetAge}%'
+		</if>
+		<if test="survey_targetGender != null">
+			and survey_targetGender like '%${survey_targetGender}%'
+		</if>
+		<if test="survey_targetJob != null">
+			and survey_targetJob like '%${survey_targetJob}%'
+		</if>
+		order by survey_idx desc
+		offset #{offset} rows
+		fetch first #{perPage} rows only
+	</select>
+
+	<select id="selectSurveyFilterCount" resultType="int"
+		parameterType="hashmap">
+		select count(*) from survey
+		where survey_targetAge like '%${survey_targetAge}%'
+		and survey_targetGender like '%${survey_targetGender}%'
+		and survey_targetJob like '%${survey_targetJob}%'
+	</select>
+
+	<select id="selectTotalDonate" resultType="hashmap">
+		select count(user_idx) as totalCount, sum(total_donate) as totalDonate from
+		user_donate
+	</select>
+
+	<select id="judge" parameterType="hashmap" resultType="int">
+		select
+		count(*) from answer where user_idx = #{user_idx} and survey_idx =
+		#{survey_idx}
+	</select>
+
+	<select id="selectSurveyResultList" parameterType="hashmap"
+		resultType="answer">
+		select distinct
+			q.survey_idx,
+			q.question_idx,
+			q.question_content,
+			a.answer_content,
+			count(a.answer_content) as count
+		from answer a
+		join survey_question q
+			on a.question_idx = q.question_idx
+		where a.survey_idx = #{survey_idx} and q.survey_idx = #{survey_idx} and a.question_idx = #{question_idx}
+		
+		group by a.answer_content, q.survey_idx, q.question_idx, q.question_content
+		order by q.question_idx
+	</select>
+
+	<select id="selectUserJoin" resultType="userjoin">
+		SELECT m.user_idx, m.user_name, floor(COUNT(DISTINCT a.survey_idx) / (SELECT COUNT(*) FROM survey) * 100) AS survey_participation_rate
+			FROM member m
+				LEFT JOIN answer a
+				ON m.user_idx = a.user_idx
+			GROUP BY m.user_idx, m.user_name
+			having floor(COUNT(DISTINCT a.survey_idx) / (SELECT COUNT(*) FROM survey) * 100) > 0
+			order by survey_participation_rate desc
+	</select>
+	
+	<select id="selectUserDonateRank" resultType="donaterank">
+		select * from (
+			SELECT m.user_name, COALESCE(SUM(d.total_donate), 0) AS total_donate
+				FROM member m
+					LEFT JOIN user_donate d
+						ON m.user_idx = d.user_idx
+						where d.total_donate > 0 
+			GROUP BY m.user_name, m.user_idx
+			ORDER BY total_donate DESC
+		) where rownum between 1 and 5
+	</select>
+
+	<select id="selectSurveyPreferQuestion" resultType="preferquestion">
+		select * from 
+		(
+		SELECT 
+		  sc.company_name, 
+		  q.question_content,
+		  COUNT(*) as preference_count,
+		  row_number() over(partition by company_name order by count(*) desc) as ranking
+		  
+		FROM 
+		  survey_company sc 
+		  JOIN survey s ON sc.company_idx = s.company_idx 
+		  JOIN survey_question sq ON s.survey_idx = sq.survey_idx 
+		  JOIN question q ON sq.question_idx = q.question_idx 
+		GROUP BY 
+		  sc.company_name, 
+		  q.question_content
+		ORDER BY 
+		  sc.company_name, 
+		  preference_count DESC
+		  )
+		  where ranking between 1 and 3
+	</select>
+
+   <select id="selectSurveyPreferGender" resultType="prefergender">
+      SELECT * from (
+         SELECT
+           m.user_gender,
+           s.survey_title,
+          COUNT(DISTINCT a.user_idx) AS count,
+          RANK() OVER (PARTITION BY
+             CASE
+               WHEN user_gender like '남성' THEN '남성'
+               ELSE '여성'
+             END
+             ORDER BY COUNT(DISTINCT a.user_idx) DESC
+           ) AS ranking
+         FROM member m
+         JOIN answer a ON m.user_idx = a.user_idx
+         JOIN survey s ON a.survey_idx = s.survey_idx
+         WHERE m.user_withdraw = 'N'
+           AND s.survey_delete = 'N'
+         GROUP BY m.user_gender, s.survey_title
+         ORDER BY m.user_gender, count DESC
+         ) where ranking BETWEEN 1 AND 3
+   </select>
+   
+   <select id="selectSurveyQuestionRanking" resultType="surveyQuestion">
+   select * from
+	  (select question_idx, question_content, count(question_idx) as count
+	  from survey_question where question_idx > 1 
+	  group by question_idx, question_content
+	  order by count desc
+	  )
+	  where rownum between 1 and 5
+   </select>
+   
+   <select id="selectSurveyPreferAge" resultType="prefergender">
+	   
+	<![CDATA[
+	   select * from 
+		(
+		SELECT
+		  CASE
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 1 AND 9 THEN '10대 이하'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 10 AND 19 THEN '10대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 20 AND 29 THEN '20대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 30 AND 39 THEN '30대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 40 AND 49 THEN '40대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 50 AND 59 THEN '50대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 60 AND 69 THEN '60대'
+		    ELSE '70대 이상'
+		  END AS age_range,
+		  s.survey_title,
+		   COUNT(DISTINCT a.user_idx) AS count,
+		ROW_NUMBER() OVER (PARTITION BY
+		    CASE
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 1 AND 9 THEN '10대 이하'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 10 AND 19 THEN '10대'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 20 AND 29 THEN '20대'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 30 AND 39 THEN '30대'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 40 AND 49 THEN '40대'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 50 AND 59 THEN '50대'
+		      WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 60 AND 69 THEN '60대'
+		      ELSE '70대 이상'
+		    END
+		    ORDER BY COUNT(DISTINCT a.user_idx) DESC
+		  ) AS ranking
+		FROM member m
+		JOIN answer a ON m.user_idx = a.user_idx
+		JOIN survey s ON a.survey_idx = s.survey_idx
+		WHERE m.user_withdraw = 'N'
+		  AND s.survey_delete = 'N'
+		  
+		GROUP BY 
+		  CASE
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 1 AND 9 THEN '10대 이하'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 10 AND 19 THEN '10대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 20 AND 29 THEN '20대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 30 AND 39 THEN '30대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 40 AND 49 THEN '40대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 50 AND 59 THEN '50대'
+		    WHEN CEIL(MONTHS_BETWEEN(SYSDATE, m.user_birth) / 12) BETWEEN 60 AND 69 THEN '60대'
+		    ELSE '70대 이상'
+		  END, s.survey_title
+		ORDER BY age_range, count DESC
+		)
+		where ranking <= 3
+	 ]]>
+   </select>
+   
+   <select id="selectSurveyPreferJob" resultType="prefergender">
+	   
+	select * from 
+		(
+		SELECT m.user_job, s.survey_title,  COUNT(DISTINCT a.user_idx) AS count,
+		row_number() over(partition by m.user_job order by COUNT(DISTINCT a.user_idx) DESC) as ranking
+		FROM member m
+			JOIN answer a ON m.user_idx = a.user_idx
+			JOIN survey s ON a.survey_idx = s.survey_idx
+				WHERE m.user_type = 'Member' AND m.user_withdraw = 'N'
+			GROUP BY m.user_job, s.survey_title, s.survey_info
+			ORDER BY count desc, ranking
+		) where ranking between 1 and 3
+   </select>
+
+</mapper>

@@ -1,0 +1,192 @@
+	@charset "utf-8";
+	body {
+		font-family: 'Dongle';
+	}
+	
+	.warningImg {
+		background-image: url(${cpath}/resources/userImg/경고.png);
+  		background-position: 20px center;
+  		background-size: 30px;
+ 		background-repeat: no-repeat;
+		text-indent: 50px;
+	}
+	
+	.hidden { display: none}
+
+	/* 약간 동의 */
+	.contract {
+	    width: 700px; margin: 50px auto 80px; padding: 30px 40px 50px;
+	    border-radius: 30px; background-color: #50684f;
+	}
+	.contract h1 {text-align: center; font-size: 60px;}
+	.contract .text {
+	    height: 230px; border: 3px solid black; background-color: white;
+	    white-space: pre-line; overflow-y: scroll; margin: 0 auto 20px;
+	    font-size: 30px; border-radius: 5px;
+	}	
+	.contract p {text-align: right;}
+	.contract .box {width: 100px; height: 40px;  padding: 8px; margin: 0 3px;}
+		
+	.text > span {color: red; font-size: 40px;}
+	
+			
+
+
+	/* 회원가입 css */
+	#logoImg {
+		width: 300px;
+	}
+
+
+	#joinForm {
+		width: 1200px;
+		margin: 0 auto;
+	}
+	
+	form > div  {
+		font-size: 25px;
+	}
+	
+	#joinForm > form > div > input , form > div > button , div > select
+		{
+		font-family: 'Dongle';
+		width: 300px;
+		font-size: 35px;
+		box-sizing: border-box;
+		padding: 0 10px;
+		border: 3px solid #1D594E;
+		border-radius: 15px;
+	}
+	
+	form > div > button {
+		width: 100px;
+		margin-left: 15px;
+		background-color: white;
+	}
+	
+	button:hover {
+		color: #1D594E;
+		cursor: pointer;
+	}
+	
+	
+	input::placeholder {
+		position: absolute;
+		font-size: 40px;
+		font-family: 'Dongle';
+		top:100%; 
+		margin-top:-50px;
+		color: #ccc;
+	}
+	
+	input:focus {
+		outline: 3px solid lightgreen;
+	}
+	
+	#joinForm > form > div {
+		width: 800px;
+		margin: 40px auto;
+	}
+	
+	.phone > input {
+		width: 90px !important;
+		
+	}
+	
+	div > span {
+		margin-left: 25px;
+	}
+
+	.inputCheck >  button {
+		width: 100px !important;
+		margin-left: 25px;
+		background-color: #648c85;
+	}
+
+
+	
+	input[type="date"] {
+		position: relative;
+	 	background: url("${cpath}/resources/userImg/calendar.png") no-repeat right 15px center / 35px auto;
+	 	border: 1px solid #000;
+	 }
+	input[type="date"]::-webkit-clear-button,
+	input[type="date"]::-webkit-inner-spin-button {display: none;}
+	input[type="date"]::-webkit-calendar-picker-indicator {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: transparent;
+		color: transparent;
+		cursor: pointer;
+	}
+	
+	input[type="date"]::before {
+		content: attr(data-placeholder);
+		width: 100%;
+	}
+	input[type="date"]:valid::before {
+		display: none;
+	}
+	input[data-placeholder]::before {
+		color: #757575;
+	}
+	
+	
+	[type="radio"] {
+	  vertical-align: middle;
+	  appearance: none;
+	  border: max(2px, 0.1em) solid gray;
+	  border-radius: 50%;
+	  width: 1.25em;
+	  height: 1.25em;
+	  transition: border 0.5s ease-in-out;
+	}
+	
+	[type="radio"]:checked {
+	  border: 0.4em solid #1D594E;
+	}
+	
+	[type="radio"]:focus-visible {
+	  outline-offset: max(2px, 0.1em);
+	  outline: max(2px, 0.1em) dotted #1D594E;
+	}
+	
+	[type="radio"]:hover {
+	  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+	  cursor: pointer;
+	}
+	
+	[type="radio"]:disabled {
+	  background-color: lightgray;
+	  box-shadow: none;
+	  opacity: 0.7;
+	  cursor: not-allowed;
+	}
+	
+	[type="radio"]:disabled + span {
+	  opacity: 0.7;
+	  cursor: not-allowed;
+	}
+	
+	.addressForm > input {
+		margin: 5px 0;
+	}
+	
+	input[type="button"] , input[type="submit"] {
+		background-color: white;
+		cursor: pointer;
+	}
+	
+	input[type="button"]:hover , input[type="submit"]  {
+		color: #1D594E;
+	}
+	
+	a > img {width: 300px;}
+
+	span.user_gender {
+		font-size: 40px;
+	}
+	
